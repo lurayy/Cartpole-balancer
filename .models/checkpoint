@@ -1,0 +1,2 @@
+model_checkpoint_path: "/models/my-650-step-model"
+all_model_checkpoint_paths: "/models/my-650-step-model"
