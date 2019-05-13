@@ -1,4 +1,15 @@
-import tensorflow as tf
+class Hero():
 
-saver = tf.train.Saver()
-meta_graph_def = tf.train.export_meta_graph(filename = '.models/my.meta')
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+        my = age + 10
+    
+    def who(self):
+        print("Name : ",self.name)
+        print("Age : ",self.age)
+
+if __name__ == "__main__":
+    hero = Hero("kabir",4)
+    hero.who()
+    print(hero.name)
