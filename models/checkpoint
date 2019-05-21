@@ -1,0 +1,2 @@
+model_checkpoint_path: "dqn_with_er.json"
+all_model_checkpoint_paths: "dqn_with_er.json"

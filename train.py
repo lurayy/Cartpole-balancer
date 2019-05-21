@@ -26,12 +26,13 @@ class Agent:
         self.model.add(tf.keras.layers.Dense(self.action_space, activation = "linear"))
         self.model.compile(loss= "mse", optimizer = tf.keras.optimizers.Adam(lr = learning_rate))
         
-        # json_file = open("models/dqn_with_er.json",'r')
-        # loaded_model_json = json_file.read()
-        # json_file.close()
-        # self.model = tf.keras.models.model_from_json(loaded_model_json)
-        # self.model.load_weights("models/dqn_with_er.h5")
-        
+        json_file = open("models/dqn_with_er.json",'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+        self.model = tf.keras.models.model_from_json(loaded_model_json)
+        self.model.load_weights("models/dqn_with_er.h5")
+        self.model.compile(loss= "mse", optimizer = tf.keras.optimizers.Adam(lr = learning_rate))
+
     def save_to_memory(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
     
@@ -66,7 +67,6 @@ class Agent:
 if __name__ == "__main__":
     env = gym.make('CartPole-v0')
     observation_space = env.observation_space.shape[0]
-    print("Observation Space = ",observation_space)
     action_space = env.action_space.n 
     agent = Agent(observation_space, action_space)
     run =  0
@@ -74,11 +74,10 @@ if __name__ == "__main__":
     while True:
         run += 1 
         state = env.reset()
-        if render == True:
-            env.render()
         state = np.reshape(state, [1,observation_space])
         step = 0
         while True:
+            # env.render()
             step += 1
             action = agent.get_action(state)
             next_state, reward, done, info = env.step(action)
@@ -92,7 +91,7 @@ if __name__ == "__main__":
             agent.experience_replay()
         if(run % 10 == 0) : 
             agent.save()
-         if(run >90):
+        if(run >90):
              render= True
         if (run == 100):
             break
